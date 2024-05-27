@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UserFragment"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.example.m014_retrofit.State"/>
+        <variable
+            name="viewModel"
+            type="com.example.m014_retrofit.UserViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2B1E28"
+        >
+
+        <ImageView
+            android:id="@+id/img_photo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/face"
+            android:contentDescription="@string/user_picture" />
+
+        <TextView
+            android:id="@+id/txt_name_dob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#fdfdfd"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_photo"
+            android:text="@{viewModel.userLiveData.nameComposite}"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btn_next"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name_dob">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                android:textColor="#fdfdfd"
+                android:textColorHint="#6a6a6a"
+                app:hintTextAppearance="@style/HintStyle"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="@string/gender"
+                    android:textColor="#fdfdfd"
+                    android:textColorHint="#6a6a6a"
+                    android:inputType="none"
+                    android:text="@{viewModel.userLiveData.gender}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                android:textColor="#fdfdfd"
+                android:textColorHint="#6a6a6a"
+                app:hintTextAppearance="@style/HintStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="@string/e_mail"
+                    android:textColor="#fdfdfd"
+                    android:textColorHint="#6a6a6a"
+                    android:inputType="none"
+                    android:text="@{viewModel.userLiveData.email}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                android:textColor="#fdfdfd"
+                android:textColorHint="#6a6a6a"
+                app:hintTextAppearance="@style/HintStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="@string/phone"
+                    android:textColor="#fdfdfd"
+                    android:textColorHint="#6a6a6a"
+                    android:inputType="none"
+                    android:text="@{viewModel.userLiveData.phone}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="@string/btn_txt_next"
+            android:textColor="#5e4602"
+            android:backgroundTint="#e2a600"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> viewModel.loadUserInfo()}"
+            android:enabled="@{viewModel.state.enable}"
+            />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/btn_next"
+            app:layout_constraintBottom_toBottomOf="@id/btn_next"
+            app:layout_constraintStart_toEndOf="@id/btn_next"
+            android:indeterminate="true"
+            android:theme="@style/CircularProgress"
+            android:visibility="@{viewModel.state.Loading ? View.VISIBLE : View.GONE}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
